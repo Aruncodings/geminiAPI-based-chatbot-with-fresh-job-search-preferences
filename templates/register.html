@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chat - Register</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-bg: #0a0f1c;
+            --secondary-bg: #1a1f2e;
+            --tertiary-bg: #2a3441;
+            --accent-green: #00ff99;
+            --accent-green-dark: #00cc7a;
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --text-muted: rgba(255, 255, 255, 0.5);
+            --border-subtle: rgba(0, 255, 153, 0.1);
+            --border-hover: rgba(0, 255, 153, 0.3);
+            --shadow-glow: 0 0 20px rgba(0, 255, 153, 0.2);
+            --shadow-strong: 0 0 40px rgba(0, 255, 153, 0.3);
+            --border-radius: 12px;
+            --border-radius-lg: 20px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--primary-bg);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow-x: hidden;
+            padding: 2rem 0;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                linear-gradient(rgba(0, 255, 153, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 153, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+            animation: grid-move 20s linear infinite;
+        }
+
+        @keyframes grid-move {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .auth-container {
+            background: var(--secondary-bg);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--border-radius-lg);
+            padding: 3rem 2.5rem;
+            width: 100%;
+            max-width: 480px;
+            box-shadow: var(--shadow-strong);
+            backdrop-filter: blur(20px);
+            position: relative;
+            z-index: 1;
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .brain-icon {
+            font-size: 3.5rem;
+            color: var(--accent-green);
+            animation: pulse-brain 3s ease-in-out infinite;
+            text-shadow: 0 0 30px rgba(0, 255, 153, 0.5);
+        }
+
+        @keyframes pulse-brain {
+            0%, 100% { 
+                opacity: 1; 
+                transform: scale(1);
+            }
+            50% { 
+                opacity: 0.8; 
+                transform: scale(1.1);
+            }
+        }
+
+        .brand-text {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-green), var(--accent-green-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -1px;
+        }
+
+        .auth-title {
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .auth-subtitle {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .flash-messages {
+            margin-bottom: 1.5rem;
+        }
+
+        .flash-message {
+            padding: 1rem 1.25rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            text-align: center;
+            animation: slideIn 0.4s ease-out;
+        }
+
+        .flash-error {
+            background: rgba(255, 68, 68, 0.1);
+            border: 1px solid #ff4444;
+            color: #ff6b6b;
+        }
+
+        .flash-success {
+            background: rgba(0, 255, 153, 0.1);
+            border: 1px solid var(--accent-green);
+            color: var(--accent-green);
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.75rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            background: var(--tertiary-bg);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--border-radius);
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: var(--transition);
+            font-family: inherit;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent-green);
+            background: rgba(0, 255, 153, 0.05);
+            box-shadow: var(--shadow-glow);
+            transform: translateY(-1px);
+        }
+
+        .form-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .password-strength {
+            margin-top: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .strength-bar {
+            height: 4px;
+            background: var(--tertiary-bg);
+            border-radius: 2px;
+            margin-top: 0.25rem;
+            overflow: hidden;
+        }
+
+        .strength-fill {
+            height: 100%;
+            background: var(--accent-green);
+            width: 0%;
+            transition: var(--transition);
+        }
+
+        .auth-btn {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            background: linear-gradient(135deg, var(--accent-green), var(--accent-green-dark));
+            color: var(--primary-bg);
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: var(--shadow-glow);
+            margin: 1rem 0;
+        }
+
+        .auth-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-strong);
+            background: linear-gradient(135deg, var(--accent-green-dark), var(--accent-green));
+        }
+
+        .auth-btn:active {
+            transform: translateY(0);
+        }
+
+        .auth-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .auth-link {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-subtle);
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .auth-link a {
+            color: var(--accent-green);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .auth-link a:hover {
+            color: var(--accent-green-dark);
+            text-decoration: underline;
+        }
+
+        .terms-checkbox {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin: 1.5rem 0;
+        }
+
+        .checkbox-input {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--accent-green);
+        }
+
+        .checkbox-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        .checkbox-label a {
+            color: var(--accent-green);
+            text-decoration: none;
+        }
+
+        .checkbox-label a:hover {
+            text-decoration: underline;
+        }
+
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            display: block;
+            pointer-events: none;
+            width: 2px;
+            height: 2px;
+            background: var(--accent-green);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: float 6s linear infinite;
+        }
+
+        .particle:nth-child(1) { left: 20%; animation-delay: 0s; }
+        .particle:nth-child(2) { left: 40%; animation-delay: 2s; }
+        .particle:nth-child(3) { left: 60%; animation-delay: 4s; }
+        .particle:nth-child(4) { left: 80%; animation-delay: 1s; }
+        .particle:nth-child(5) { left: 10%; animation-delay: 3s; }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.3;
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(-10vh) scale(1);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .auth-container {
+                padding: 2rem 1.5rem;
+                margin: 1rem;
+                max-width: 380px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .brand-text {
+                font-size: 2rem;
+            }
+
+            .brain-icon {
+                font-size: 2.5rem;
+            }
+
+            .auth-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles">
+        <span class="particle"></span>
+        <span class="particle"></span>
+        <span class="particle"></span>
+        <span class="particle"></span>
+        <span class="particle"></span>
+    </div>
+
+    <div class="auth-container">
+        <div class="auth-header">
+            <div class="brand-logo">
+                <i class="fas fa-brain brain-icon"></i>
+                <h1 class="brand-text">AI Chatbot</h1>
+            </div>
+            <h2 class="auth-title">Neural Profile Creation</h2>
+            <p class="auth-subtitle">Initialize your AI companion experience</p>
+        </div>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for message in messages %}
+                        <div class="flash-message flash-error">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST" id="registerForm">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="first_name" class="form-label">First Name</label>
+                    <input type="text"
+                           id="first_name"
+                           name="first_name"
+                           class="form-input"
+                           placeholder="Enter your first name"
+                           required
+                           autocomplete="given-name">
+                </div>
+
+                <div class="form-group">
+                    <label for="last_name" class="form-label">Last Name</label>
+                    <input type="text"
+                           id="last_name"
+                           name="last_name"
+                           class="form-input"
+                           placeholder="Enter your last name"
+                           required
+                           autocomplete="family-name">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="email" class="form-label">Email Address</label>
+                <input type="email"
+                       id="email"
+                       name="email"
+                       class="form-input"
+                       placeholder="Enter your email address"
+                       required
+                       autocomplete="email">
+            </div>
+
+            <div class="form-group">
+                <label for="password" class="form-label">Password</label>
+                <input type="password"
+                       id="password"
+                       name="password"
+                       class="form-input"
+                       placeholder="Create a secure password"
+                       required
+                       autocomplete="new-password">
+                <div class="password-strength">
+                    <span id="strengthText">Password strength: </span>
+                    <div class="strength-bar">
+                        <div class="strength-fill" id="strengthFill"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="confirm_password" class="form-label">Confirm Password</label>
+                <input type="password"
+                       id="confirm_password"
+                       name="confirm_password"
+                       class="form-input"
+                       placeholder="Confirm your password"
+                       required
+                       autocomplete="new-password">
+            </div>
+
+            <div class="terms-checkbox">
+                <input type="checkbox" id="terms" class="checkbox-input" required>
+                <label for="terms" class="checkbox-label">
+                    I agree to the <a href="#" onclick="return false;">Terms of Service</a> and
+                    <a href="#" onclick="return false;">Privacy Policy</a>. I understand that AI responses
+                    are generated content and should be used responsibly.
+                </label>
+            </div>
+
+            <button type="submit" class="auth-btn" id="submitBtn">
+                Create Neural Profile
+            </button>
+        </form>
+
+        <div class="auth-link">
+            Already have a neural profile?
+            <a href="{{ url_for('login') }}">Access Interface</a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const passwordInput = document.getElementById('password');
+            const confirmPasswordInput = document.getElementById('confirm_password');
+            const strengthText = document.getElementById('strengthText');
+            const strengthFill = document.getElementById('strengthFill');
+            const submitBtn = document.getElementById('submitBtn');
+            const form = document.getElementById('registerForm');
+
+            function checkPasswordStrength(password) {
+                let strength = 0;
+                let feedback = [];
+
+                if (password.length >= 8) strength += 25;
+                else feedback.push('at least 8 characters');
+
+                if (/[a-z]/.test(password)) strength += 25;
+                else feedback.push('lowercase letter');
+
+                if (/[A-Z]/.test(password)) strength += 25;
+                else feedback.push('uppercase letter');
+
+                if (/[0-9]/.test(password)) strength += 25;
+                else feedback.push('number');
+
+                if (/[^A-Za-z0-9]/.test(password)) strength += 0;
+
+                return { strength, feedback };
+            }
+
+            passwordInput.addEventListener('input', function() {
+                const password = this.value;
+                const result = checkPasswordStrength(password);
+
+                strengthFill.style.width = result.strength + '%';
+
+                if (result.strength === 0) {
+                    strengthText.textContent = 'Password strength: ';
+                    strengthFill.style.background = '#ff4444';
+                } else if (result.strength < 50) {
+                    strengthText.textContent = 'Password strength: Weak';
+                    strengthFill.style.background = '#ff6666';
+                } else if (result.strength < 75) {
+                    strengthText.textContent = 'Password strength: Medium';
+                    strengthFill.style.background = '#ffaa00';
+                } else {
+                    strengthText.textContent = 'Password strength: Strong';
+                    strengthFill.style.background = 'var(--accent-green)';
+                }
+            });
+
+            function validatePasswordMatch() {
+                const password = passwordInput.value;
+                const confirmPassword = confirmPasswordInput.value;
+
+                if (confirmPassword && password !== confirmPassword) {
+                    confirmPasswordInput.setCustomValidity('Passwords do not match');
+                    confirmPasswordInput.style.borderColor = '#ff4444';
+                } else {
+                    confirmPasswordInput.setCustomValidity('');
+                    confirmPasswordInput.style.borderColor = '';
+                }
+            }
+
+            passwordInput.addEventListener('input', validatePasswordMatch);
+            confirmPasswordInput.addEventListener('input', validatePasswordMatch);
+
+            form.addEventListener('submit', function(e) {
+                const password = passwordInput.value;
+                const confirmPassword = confirmPasswordInput.value;
+
+                if (password !== confirmPassword) {
+                    e.preventDefault();
+                    alert('Passwords do not match!');
+                    return;
+                }
+
+                if (password.length < 6) {
+                    e.preventDefault();
+                    alert('Password must be at least 6 characters long!');
+                    return;
+                }
+
+                submitBtn.textContent = 'Creating Profile...';
+                submitBtn.disabled = true;
+            });
+
+            const inputs = document.querySelectorAll('.form-input');
+
+            inputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.parentElement.style.transform = 'translateY(-2px)';
+                });
+
+                input.addEventListener('blur', function() {
+                    this.parentElement.style.transform = 'translateY(0)';
+                });
+            });
+
+            const nameInputs = [document.getElementById('first_name'), document.getElementById('last_name')];
+            nameInputs.forEach(input => {
+                input.addEventListener('input', function() {
+
+                    this.value = this.value.replace(/[^a-zA-Z\s]/g, '');
+                });
+            });
+
+            const emailInput = document.getElementById('email');
+            emailInput.addEventListener('blur', function() {
+                const email = this.value;
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+                if (email && !emailRegex.test(email)) {
+                    this.style.borderColor = '#ff4444';
+                    this.setCustomValidity('Please enter a valid email address');
+                } else {
+                    this.style.borderColor = '';
+                    this.setCustomValidity('');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
